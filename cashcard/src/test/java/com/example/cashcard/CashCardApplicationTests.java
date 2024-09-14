@@ -18,7 +18,7 @@ class CashCardApplicationTests {
 
 	@Test
 	void serialization() throws IOException {
-		CashCard c = new CashCard(99, 123.45);
+		CashCard c = new CashCard(99L, 123.45);
 		assertThat(json.write(c)).isStrictlyEqualToJson("expected.json");
 		assertThat(json.write(c)).hasJsonPathNumberValue("@.id");
 		assertThat(json.write(c)).extractingJsonPathNumberValue("@.id").isEqualTo(99);
@@ -35,7 +35,7 @@ class CashCardApplicationTests {
                "amount":123.45
            }
            """;
-		assertThat(json.parse(expected)).isEqualTo(new CashCard(99, 123.45));
+		assertThat(json.parse(expected)).isEqualTo(new CashCard(99L, 123.45));
 		assertThat(json.parseObject(expected).id()).isEqualTo(99);
    		assertThat(json.parseObject(expected).amount()).isEqualTo(123.45);
 		
