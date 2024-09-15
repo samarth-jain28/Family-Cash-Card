@@ -35,4 +35,11 @@ class CashCardWebHandlerTest{
         ResponseEntity<String> response = restTemplate.getForEntity("/cashcards/1000", String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
+
+    @Test
+    void ShouldCreateNewCashCard(){
+        CashCard cc = new CashCard(null, 123.45);
+        ResponseEntity<Void>response = restTemplate.postForEntity("/cashcard", cc, Void.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
 }
