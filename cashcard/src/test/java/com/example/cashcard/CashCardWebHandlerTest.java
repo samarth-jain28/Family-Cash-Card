@@ -12,6 +12,8 @@ import com.jayway.jsonpath.JsonPath;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.net.URI;
+
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CashCardWebHandlerTest{
@@ -38,8 +40,12 @@ class CashCardWebHandlerTest{
 
     @Test
     void ShouldCreateNewCashCard(){
-        CashCard cc = new CashCard(null, 123.45);
+        CashCard cc = new CashCard(null, 250.45);
         ResponseEntity<Void>response = restTemplate.postForEntity("/cashcard", cc, Void.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        
+        URI locationOfNewCashCard = response.getHeaders().getLocation();
+        ResponseEntity<String> getResponse = restTemplate.getForEntity(locationOfNewCashCard, String.class);
+        assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 }
