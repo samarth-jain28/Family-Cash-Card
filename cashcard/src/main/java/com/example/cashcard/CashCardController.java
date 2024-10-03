@@ -27,4 +27,9 @@ class CashCardController {
         }
     }
 
+    @GetMapping("/about")
+    private String about(){
+        return "Hello World!";
+    }
+
 }
