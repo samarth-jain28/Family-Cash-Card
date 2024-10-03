@@ -17,11 +17,10 @@ class CashCardController {
     
 
     @GetMapping("/{requestedId}")
-    private ResponseEntity<CashCard> findById(@PathVariable Long requestedId) {
+    private ResponseEntity<Optional<CashCard>> findById(@PathVariable Long requestedId) {
         Optional<CashCard> ccOptional = cashCardRepository.findById(requestedId);
         if (ccOptional.isPresent()) {
-            CashCard cashCard = new CashCard(99L, 123.45);
-            return ResponseEntity.ok(cashCard);
+            return ResponseEntity.ok(ccOptional);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -29,7 +28,7 @@ class CashCardController {
 
     @GetMapping("/about")
     private String about(){
-        return "Hello World!";
+        return "Hello World";
     }
 
 }
